@@ -5,7 +5,10 @@ if (typeof process.env.REACT_APP_WEB_SOCKET_BACKEND_URL !== "string") {
   throw new Error("no environment value : WEB_SOCKET_BACKEND_URL");
 }
 
-const socket = io(process.env.REACT_APP_WEB_SOCKET_BACKEND_URL);
+const socket = io('ws://localhost:4000',{
+  transports: ['websocket'],
+  
+});
 
 function App() {
   const [messages, setMessages] = useState<string[]>([]);
