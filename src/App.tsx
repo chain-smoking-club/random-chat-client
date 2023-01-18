@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
+import { customEventNames } from "./service/customEventNames";
 
 if (typeof process.env.REACT_APP_WEB_SOCKET_BACKEND_URL !== "string") {
   throw new Error("no environment value : WEB_SOCKET_BACKEND_URL");
 }
 
-const socket = io(process.env.REACT_APP_WEB_SOCKET_BACKEND_URL,{
-  transports: ['websocket'],
-  
+const socket = io(process.env.REACT_APP_WEB_SOCKET_BACKEND_URL, {
+  transports: ["websocket"],
 });
 
 function App() {
@@ -17,17 +17,20 @@ function App() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (typingMessage) {
-      socket.emit("SEND_MESSAGE", { content: typingMessage });
+      socket.emit(customEventNames.sendMessage, { content: typingMessage });
       setTypingMessage("");
     }
   };
 
   useEffect(() => {
-    socket.on("RECEIVE_MESSAGE", (receiveMessage: { content: string }) => {
-      setMessages(messages.concat(receiveMessage.content));
-    });
+    socket.on(
+      customEventNames.receiveMessage,
+      (receiveMessage: { content: string }) => {
+        setMessages(messages.concat(receiveMessage.content));
+      }
+    );
     return () => {
-      socket.off("RECEIVE_MESSAGE");
+      socket.off(customEventNames.receiveMessage);
     };
   }, [messages]);
 
