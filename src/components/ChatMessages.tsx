@@ -1,20 +1,13 @@
-import { useEffect, useState } from "react";
-import { customEventNames } from "../service/customEventNames";
-import { socket } from "../service/socket";
+import { useEffect } from "react";
+import useMessages from "../hooks/useMessages";
+import { socketEvent } from "../service/socket";
 
 const ChatMessages = () => {
-  const [messages, setMessages] = useState<string[]>([]);
+  const { messages, concatMessages } = useMessages();
 
   useEffect(() => {
-    socket.on(
-      customEventNames.receiveMessage,
-      (receiveMessage: { content: string }) => {
-        setMessages(messages.concat(receiveMessage.content));
-      }
-    );
-    return () => {
-      socket.off(customEventNames.receiveMessage);
-    };
+    socketEvent.onReceiveMessage(concatMessages);
+    return socketEvent.offReceiveMessage;
   }, [messages]);
 
   return (

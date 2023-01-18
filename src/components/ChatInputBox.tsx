@@ -1,21 +1,16 @@
 import useInput from "../hooks/useInput";
-import { customEventNames } from "../service/customEventNames";
-import { socket } from "../service/socket";
+import { socketEvent } from "../service/socket";
 
 const ChatInputBox = () => {
-  const { input: typingMessage, onChange, resetInput } = useInput("");
+  const { input: typingMessage, onChange, onSubmitCallback } = useInput("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (typingMessage) {
-      socket.emit(customEventNames.sendMessage, { content: typingMessage });
-      resetInput();
-    }
-  };
+  const onSubmit = onSubmitCallback(() => {
+    if (typingMessage.length > 0) socketEvent.emitSendMessage(typingMessage);
+  });
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={onSubmit}>
         <input value={typingMessage} onChange={onChange} />
         <button>submit</button>
       </form>

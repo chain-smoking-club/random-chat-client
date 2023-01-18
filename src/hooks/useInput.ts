@@ -8,7 +8,14 @@ const useInput = (initialInput: string) => {
 
   const resetInput = () => setInput("");
 
-  return { input, onChange, resetInput };
+  const onSubmitCallback =
+    (callback: () => void) => (e: React.FormEvent<HTMLFormElement>) => {
+      e.preventDefault();
+      callback();
+      resetInput();
+    };
+
+  return { input, onChange, onSubmitCallback };
 };
 
 export default useInput;
