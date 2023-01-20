@@ -1,27 +1,25 @@
-import io from "socket.io-client";
-import { Message } from "./models";
+import { io, Socket } from "socket.io-client";
+import { GetRoomsResponse, Message } from "./models";
 
 if (typeof process.env.REACT_APP_WEB_SOCKET_BACKEND_URL !== "string") {
   throw new Error("no environment value : WEB_SOCKET_BACKEND_URL");
 }
 
-const customEventNames = {
-  sendMessage: "SEND_MESSAGE",
-  receiveMessage: "RECEIVE_MESSAGE",
-} as const;
+interface ServerToClientEvents {
+  receiveMessage: (receiveMessage: Message) => void;
+}
 
-const socket = io(process.env.REACT_APP_WEB_SOCKET_BACKEND_URL, {
-  transports: ["websocket"],
-});
+interface ClientToServerEvents {
+  createRoom: (roomName: string) => void;
+  joinRoom: (roomName: string) => void;
+  sendMessage: (message: Message) => void;
+  leaveRoom: () => void;
+  getRooms: (callback: (res: GetRoomsResponse) => void) => void;
+}
 
-export const socketEvent = {
-  emitSendMessage: (content: Message["content"]) =>
-    socket.emit(customEventNames.sendMessage, { content }),
-  onReceiveMessage: (callback: (content: Message["content"]) => void) =>
-    socket.on(customEventNames.receiveMessage, (receiveMessage: Message) => {
-      callback(receiveMessage.content);
-    }),
-  offReceiveMessage: () => {
-    socket.off(customEventNames.receiveMessage);
-  },
-};
+export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(
+  process.env.REACT_APP_WEB_SOCKET_BACKEND_URL,
+  {
+    transports: ["websocket"],
+  }
+);

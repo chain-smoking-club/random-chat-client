@@ -1,14 +1,7 @@
-import { useEffect } from "react";
 import useMessages from "../hooks/useMessages";
-import { socketEvent } from "../service/socket";
 
 const ChatMessages = () => {
-  const { messages, concatMessages } = useMessages();
-
-  useEffect(() => {
-    socketEvent.onReceiveMessage(concatMessages);
-    return socketEvent.offReceiveMessage;
-  }, [messages]);
+  const { messages } = useMessages();
 
   return (
     <>

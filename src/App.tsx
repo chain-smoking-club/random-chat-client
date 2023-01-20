@@ -1,11 +1,16 @@
-import ChatInputBox from "./components/ChatInputBox";
-import ChatMessages from "./components/ChatMessages";
+import { useContext } from "react";
+import { UserContext } from ".";
+import Profile from "./components/Profile";
+import Room from "./components/Room";
+import RoomList from "./components/RoomList";
 
 function App() {
+  const { getRoomName } = useContext(UserContext);
+
   return (
     <>
-      <ChatMessages />
-      <ChatInputBox />
+      <>{getRoomName() ? <Room /> : <RoomList />}</>
+      <Profile />
     </>
   );
 }

@@ -1,11 +1,10 @@
 import useInput from "../hooks/useInput";
-import { socketEvent } from "../service/socket";
+import { sendMessage } from "../service/apis";
 
 const ChatInputBox = () => {
   const { input: typingMessage, onChange, onSubmitCallback } = useInput("");
-
   const onSubmit = onSubmitCallback(() => {
-    if (typingMessage.length > 0) socketEvent.emitSendMessage(typingMessage);
+    if (typingMessage.length > 0) sendMessage(typingMessage);
   });
 
   return (
