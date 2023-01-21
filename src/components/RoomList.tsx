@@ -1,23 +1,26 @@
 import { useContext } from "react";
-import { UserContext } from "..";
-import { useRoom } from "../service/apis";
+import { roomContext } from "../context/roomContext";
+import useInput from "../hooks/useInput";
 
 const RoomList = () => {
-  const { roomNames, joinRoom, createRoom } = useRoom();
-  const { setRoomName } = useContext(UserContext);
+  const context = useContext(roomContext);
+  const { input, onChange, onSubmitCallback } = useInput("");
+
+  const createRoomSubmit = onSubmitCallback(() => {
+    context?.createRoom(input);
+  });
 
   return (
     <>
       <>
-        {roomNames.length === 0 ? (
+        {context?.roomNames.length === 0 ? (
           <div>no room</div>
         ) : (
-          roomNames.map((roomName, index) => (
+          context?.roomNames.map((roomName, index) => (
             <div
               key={index}
               onClick={() => {
-                setRoomName(roomName);
-                joinRoom(roomName);
+                context?.joinRoom(roomName);
               }}
             >
               {roomName}
@@ -25,7 +28,10 @@ const RoomList = () => {
           ))
         )}
       </>
-      <button onClick={() => createRoom("새방")}>방 만들기</button>
+      <form onSubmit={createRoomSubmit}>
+        <input value={input} onChange={onChange} />
+        <button>방 만들기</button>
+      </form>
     </>
   );
 };

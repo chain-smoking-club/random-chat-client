@@ -7,6 +7,7 @@ if (typeof process.env.REACT_APP_WEB_SOCKET_BACKEND_URL !== "string") {
 
 interface ServerToClientEvents {
   receiveMessage: (receiveMessage: Message) => void;
+  getRooms: (roomNames: string[]) => void;
 }
 
 interface ClientToServerEvents {

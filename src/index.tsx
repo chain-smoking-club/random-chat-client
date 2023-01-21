@@ -1,26 +1,16 @@
-import React, { createContext } from "react";
+import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
+import RoomProvider from "./context/roomContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const ppap = (() => {
-  let roomName: string | null = null;
-  const getRoomName = () => roomName;
-  const setRoomName = (arg: string | null) => {
-    roomName = arg;
-  };
-  return { getRoomName, setRoomName };
-})();
-
-export const UserContext = createContext(ppap);
-
 root.render(
   <React.StrictMode>
-    <UserContext.Provider value={ppap}>
+    <RoomProvider>
       <App />
-    </UserContext.Provider>
+    </RoomProvider>
   </React.StrictMode>
 );
