@@ -11,11 +11,11 @@ interface ServerToClientEvents {
 }
 
 interface ClientToServerEvents {
+  getRooms: (callback: (res: GetRoomsResponse) => void) => void;
   createRoom: (roomName: string) => void;
   joinRoom: (roomName: string) => void;
+  leaveRoom: (roomName: string) => void;
   sendMessage: (message: Message) => void;
-  leaveRoom: () => void;
-  getRooms: (callback: (res: GetRoomsResponse) => void) => void;
 }
 
 export const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io(

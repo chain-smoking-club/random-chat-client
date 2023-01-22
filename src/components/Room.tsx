@@ -3,10 +3,18 @@ import ChatInputBox from "./ChatInputBox";
 import ChatMessages from "./ChatMessages";
 
 const Room = () => {
-  const { leaveRoom } = useRoomContext();
+  const { leaveRoom, joinedRoomName } = useRoomContext();
   return (
     <>
-      <button onClick={leaveRoom}>방 나가기</button>
+      <button
+        onClick={() => {
+          if (!joinedRoomName)
+            throw new Error("no joinedRoomName : on leaveRoom func");
+          leaveRoom(joinedRoomName);
+        }}
+      >
+        방 나가기
+      </button>
       <ChatMessages />
       <ChatInputBox />
     </>

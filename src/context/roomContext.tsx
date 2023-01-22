@@ -13,7 +13,7 @@ const roomContext = createContext<{
   joinedRoomName: string | null;
   joinRoom: (roomName: string) => void;
   createRoom: (roomName: string) => void;
-  leaveRoom: () => void;
+  leaveRoom: (roomName: string) => void;
 } | null>(null);
 
 export const useRoomContext = () => {
@@ -38,8 +38,8 @@ export const RoomContextProvider = ({ children }: { children: ReactNode }) => {
   };
 
   // TODO: 인원 1명일 때 나가면 방 삭제 이벤트 만들기
-  const leaveRoom = () => {
-    socket.emit("leaveRoom");
+  const leaveRoom = (roomName: string) => {
+    socket.emit("leaveRoom", roomName);
     setJoinedRoomName(null);
   };
 
