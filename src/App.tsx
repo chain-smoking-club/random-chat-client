@@ -1,14 +1,13 @@
 import Profile from "./components/Profile";
 import Room from "./components/Room";
 import RoomList from "./components/RoomList";
-import { roomContext } from "./context/roomContext";
-import { useContext } from "react";
+import { useRoomContext } from "./context/roomContext";
 
 function App() {
-  const context = useContext(roomContext);
+  const { joinedRoomName } = useRoomContext();
   return (
     <>
-      <>{context?.roomName ? <Room /> : <RoomList />}</>
+      <>{joinedRoomName ? <Room /> : <RoomList />}</>
       <Profile />
     </>
   );

@@ -1,13 +1,12 @@
-import { useContext } from "react";
-import { roomContext } from "../context/roomContext";
+import { useRoomContext } from "../context/roomContext";
 import ChatInputBox from "./ChatInputBox";
 import ChatMessages from "./ChatMessages";
 
 const Room = () => {
-  const context = useContext(roomContext);
+  const { leaveRoom } = useRoomContext();
   return (
     <>
-      <button onClick={context?.leaveRoom}>방 나가기</button>
+      <button onClick={leaveRoom}>방 나가기</button>
       <ChatMessages />
       <ChatInputBox />
     </>

@@ -6,7 +6,7 @@ const useInput = (initialInput: string) => {
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) =>
     setInput(e.target.value);
 
-  const resetInput = () => setInput("");
+  const resetInput = () => setInput(initialInput);
 
   const onSubmitCallback =
     (callback: () => void) => (e: React.FormEvent<HTMLFormElement>) => {

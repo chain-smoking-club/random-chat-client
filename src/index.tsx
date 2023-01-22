@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
-import RoomProvider from "./context/roomContext";
+import { RoomContextProvider } from "./context/roomContext";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -9,8 +9,8 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RoomProvider>
+    <RoomContextProvider>
       <App />
-    </RoomProvider>
+    </RoomContextProvider>
   </React.StrictMode>
 );
