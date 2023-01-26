@@ -2,11 +2,11 @@ import { useRoomContext } from "../context/roomContext";
 import useInput from "../hooks/useInput";
 
 const RoomList = () => {
-  const { createRoom, roomNames, joinRoom } = useRoomContext();
+  const { makeRoom, roomNames, joinRoom } = useRoomContext();
   const { input, onChange, onSubmitCallback } = useInput("");
 
   const createRoomSubmit = onSubmitCallback(() => {
-    createRoom(input);
+    makeRoom(input);
   });
 
   return (
