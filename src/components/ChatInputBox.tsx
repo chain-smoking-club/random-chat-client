@@ -5,9 +5,10 @@ import { sendMessage } from "../service/apis";
 const ChatInputBox = () => {
   const { input: typingMessage, onChange, onSubmitCallback } = useInput("");
   const { joinedRoomName } = useRoomContext();
-  const onSubmit = onSubmitCallback(() => {
+  const onSubmit = onSubmitCallback(async () => {
     if (!joinedRoomName) throw new Error("no joinedRoomName : at chatinputbox");
-    if (typingMessage.length > 0) sendMessage(typingMessage, joinedRoomName);
+    if (typingMessage.length > 0)
+      sendMessage({ content: typingMessage, joinedRoomName });
   });
 
   return (

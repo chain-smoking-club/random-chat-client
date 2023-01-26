@@ -1,25 +1,27 @@
-import { useRoomContext } from "../context/roomContext";
+import { useQuery } from "react-query";
 import useInput from "../hooks/useInput";
+import { fetchGetRooms, joinRoom, makeRoom } from "../service/apis";
 
 const RoomList = () => {
-  const { makeRoom, roomNames, joinRoom } = useRoomContext();
   const { input, onChange, onSubmitCallback } = useInput("");
 
+  const { data: roomNames } = useQuery<string[]>(["getRooms"], fetchGetRooms);
+
   const createRoomSubmit = onSubmitCallback(() => {
-    makeRoom(input);
+    makeRoom({ roomName: input });
   });
 
   return (
     <>
       <>
-        {roomNames.length === 0 ? (
+        {!roomNames || roomNames.length === 0 ? (
           <div>no room</div>
         ) : (
           roomNames.map((roomName, index) => (
             <div
               key={index}
               onClick={() => {
-                joinRoom(roomName);
+                joinRoom({ roomName });
               }}
             >
               {roomName}
