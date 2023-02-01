@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
+import { QueryClient, QueryClientProvider } from "react-query";
 import App from "./App";
 import { RoomContextProvider } from "./context/roomContext";
 
@@ -7,10 +8,14 @@ const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
+const queryClient = new QueryClient();
+
 root.render(
   <React.StrictMode>
-    <RoomContextProvider>
-      <App />
-    </RoomContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <RoomContextProvider>
+        <App />
+      </RoomContextProvider>
+    </QueryClientProvider>
   </React.StrictMode>
 );
