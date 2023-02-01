@@ -4,8 +4,8 @@ import { fetchGetRooms, joinRoom, makeRoom } from "../service/apis";
 
 const RoomList = () => {
   const { input, onChange, onSubmitCallback } = useInput("");
-
-  const { data: roomNames } = useQuery<string[]>(["getRooms"], fetchGetRooms);
+  const { data } = useQuery<{ data: string[] }>(["getRooms"], fetchGetRooms);
+  const roomNames = data?.data;
 
   const createRoomSubmit = onSubmitCallback(() => {
     makeRoom({ roomName: input });

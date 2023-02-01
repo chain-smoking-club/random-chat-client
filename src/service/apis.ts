@@ -53,5 +53,7 @@ export const socketErrorHandler = (eventResponse: EventResponse) => {
   if (eventResponse.status === "FAIL") throw new Error("socket error");
 };
 
-// TODO: 서버 api 완성 시 수정
-export const fetchGetRooms = async () => (await fetch("tempURL")).json();
+export const fetchGetRooms = async () =>
+  (
+    await fetch(`${process.env.REACT_APP_WEB_HTTP_BACKEND_URL}/api/rooms`)
+  ).json();
