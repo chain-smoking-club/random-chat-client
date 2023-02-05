@@ -8,7 +8,7 @@ const ChatInputBox = () => {
   const onSubmit = onSubmitCallback(async () => {
     if (!joinedRoomName) throw new Error("no joinedRoomName : at chatinputbox");
     if (typingMessage.length > 0)
-      sendMessage({ content: typingMessage, joinedRoomName });
+      sendMessage({ content: typingMessage, roomName: joinedRoomName });
   });
 
   return (

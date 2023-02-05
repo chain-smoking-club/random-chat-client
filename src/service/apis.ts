@@ -4,7 +4,7 @@ import { ClientToServerEvents, ServerToClientEvents, socket } from "./socket";
 // TODO: message에 발신자 닉네임 포함하기
 export const sendMessage = async (args: {
   content: Message["content"];
-  joinedRoomName: string;
+  roomName: string;
 }) => socketFactory("sendMessage", args);
 
 export const makeRoom = async (args: { roomName: string }) =>
@@ -34,19 +34,26 @@ const getEventResponseName = (
   (eventName + "Response") as keyof ServerToClientEvents;
 
 // TODO: 적절한 함수명으로 바꾸기, args 타입 정의하기
+// const socketFactory = async (
+//   eventName: keyof ClientToServerEvents,
+//   args: any
+// ) => {
+//   socketErrorHandler(
+//     await new Promise<EventResponse>((resolve, reject) => {
+//       socket.emit(eventName, args);
+//       socket.on(getEventResponseName(eventName), (res: EventResponse) => {
+//         if (res.status === "SUCCESS") resolve(res);
+//         else reject(res);
+//       });
+//     })
+//   );
+// };
+
 const socketFactory = async (
   eventName: keyof ClientToServerEvents,
   args: any
 ) => {
-  socketErrorHandler(
-    await new Promise<EventResponse>((resolve, reject) => {
-      socket.emit(eventName, args);
-      socket.on(getEventResponseName(eventName), (res: EventResponse) => {
-        if (res.status === "SUCCESS") resolve(res);
-        else reject(res);
-      });
-    })
-  );
+  socket.emit(eventName, args);
 };
 
 export const socketErrorHandler = (eventResponse: EventResponse) => {

@@ -9,6 +9,7 @@ const useMessages = () => {
 
   useEffect(() => {
     const cleanUp = onReceiveMessage(concatMessages);
+    console.log(messages);
     return cleanUp;
   }, [messages]);
 
