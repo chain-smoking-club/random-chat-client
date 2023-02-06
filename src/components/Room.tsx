@@ -1,5 +1,5 @@
 import { useRoomContext } from "../context/roomContext";
-import { leaveRoom } from "../service/apis";
+import { leaveRoom } from "../service/apis/socketClientToServer";
 import ChatInputBox from "./ChatInputBox";
 import ChatMessages from "./ChatMessages";
 

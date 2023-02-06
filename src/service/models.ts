@@ -10,7 +10,3 @@ export interface Message {
 export interface GetRoomsResponse {
   rooms: string[];
 }
-
-export interface EventResponse {
-  status: "SUCCESS" | "FAIL";
-}

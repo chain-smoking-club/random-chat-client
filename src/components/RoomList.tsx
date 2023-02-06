@@ -1,6 +1,7 @@
 import { useQuery } from "react-query";
 import useInput from "../hooks/useInput";
-import { fetchGetRooms, joinRoom, makeRoom } from "../service/apis";
+import { fetchGetRooms } from "../service/apis/http";
+import { joinRoom, makeRoom } from "../service/apis/socketClientToServer";
 
 const RoomList = () => {
   const { input, onChange, onSubmitCallback } = useInput("");
