@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { onReceiveMessage } from "../service/apis/socketServerToClient";
+import { onReceiveMessage } from "../service/socketApis/serverToClient";
 
-const useMessages = () => {
+export default function useMessages() {
   const [messages, setMessages] = useState<string[]>([]);
 
   useEffect(() => {
@@ -13,6 +13,4 @@ const useMessages = () => {
   }, [messages]);
 
   return { messages };
-};
-
-export default useMessages;
+}

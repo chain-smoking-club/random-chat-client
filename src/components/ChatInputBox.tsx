@@ -1,14 +1,15 @@
-import { useRoomContext } from "../context/roomContext";
 import useInput from "../hooks/useInput";
-import { sendMessage } from "../service/apis/socketClientToServer";
+import useRoom from "../hooks/useRoom";
+import { emitSendMessage } from "../service/socketApis/clientToServer";
 
 const ChatInputBox = () => {
   const { input: typingMessage, onChange, onSubmitCallback } = useInput("");
-  const { joinedRoomName } = useRoomContext();
+  const { joinedRoomName } = useRoom();
+
   const onSubmit = onSubmitCallback(async () => {
     if (!joinedRoomName) throw new Error("no joinedRoomName : at chatinputbox");
     if (typingMessage.length > 0)
-      sendMessage({ content: typingMessage, roomName: joinedRoomName });
+      emitSendMessage({ content: typingMessage, roomName: joinedRoomName });
   });
 
   return (

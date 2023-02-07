@@ -1,5 +1,5 @@
-import { Message } from "../models";
-import { socket } from "../socket";
+import { Message } from "../model/roomSchema";
+import { socket } from "./socket";
 
 export const onReceiveMessage = (
   callback: (content: Message["content"]) => void

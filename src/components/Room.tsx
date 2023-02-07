@@ -1,12 +1,12 @@
-import { useRoomContext } from "../context/roomContext";
-import { leaveRoom } from "../service/apis/socketClientToServer";
+import useRoom from "../hooks/useRoom";
 import ChatInputBox from "./ChatInputBox";
 import ChatMessages from "./ChatMessages";
 
 const Room = () => {
-  const { joinedRoomName } = useRoomContext();
+  const { joinedRoomName, leaveRoom } = useRoom();
   return (
     <>
+      <h2>방제: {joinedRoomName}</h2>
       <button
         onClick={() => {
           if (!joinedRoomName)

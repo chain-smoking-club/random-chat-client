@@ -1,16 +1,52 @@
-import Profile from "./components/Profile";
-import Room from "./components/Room";
-import RoomList from "./components/RoomList";
-import { useRoomContext } from "./context/roomContext";
+import { Routes, Route, Navigate } from "react-router-dom";
+import RoomPage from "./pages/room";
+import LobbyPage from "./pages/lobby";
+import RootPage from "./pages/root";
+import LoginPage from "./pages/login";
+import { AuthProvider, useAuth } from "./context/auth";
 
-function App() {
-  const { joinedRoomName } = useRoomContext();
+export default function App() {
   return (
     <>
-      <>{joinedRoomName ? <Room /> : <RoomList />}</>
-      <Profile />
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<RootPage />} />
+          <Route
+            path="/lobby"
+            element={
+              <RequireAuth>
+                <LobbyPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/room/:roomId"
+            element={
+              <RequireAuth>
+                <RoomPage />
+              </RequireAuth>
+            }
+          />
+          <Route
+            path="/login"
+            element={
+              <NoNeedAuth>
+                <LoginPage />
+              </NoNeedAuth>
+            }
+          />
+        </Routes>
+      </AuthProvider>
     </>
   );
 }
 
-export default App;
+function RequireAuth({ children }: { children: JSX.Element }) {
+  const { hasAuth } = useAuth();
+  return <>{hasAuth ? children : <Navigate to="/login" replace />}</>;
+}
+
+function NoNeedAuth({ children }: { children: JSX.Element }) {
+  const { hasAuth } = useAuth();
+  return <>{hasAuth ? <Navigate to="/" replace /> : children}</>;
+}
