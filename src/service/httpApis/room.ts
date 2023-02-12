@@ -3,5 +3,5 @@ import { GetRoomsResponse } from "../model/roomSchema";
 
 export const fetchGetRooms = async () =>
   axios.get<GetRoomsResponse>(
-    `${process.env.REACT_APP_HTTP_BACKEND_URL}/api/rooms`
+    `${import.meta.env.VITE_HTTP_BACKEND_URL}/api/rooms`
   );

@@ -25,10 +25,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const login: AuthContextProps["login"] = async (props) => {
     try {
-      // const res = await fetchLogin(props);
-      // storage.set("ACCESS_TOKEN", res.data.access_token);
+      const res = await fetchLogin(props);
+      storage.set("ACCESS_TOKEN", res.data.access_token);
       // TODO: 서버 로그인 api 구현시 수정
-      storage.set("ACCESS_TOKEN", "temp");
+      // storage.set("ACCESS_TOKEN", "temp");
       setHasAuth(true);
     } catch (err) {
       handleError(err);

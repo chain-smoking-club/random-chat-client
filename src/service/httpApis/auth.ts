@@ -11,12 +11,12 @@ export function fetchSignup(props: SignRequestProps) {
 }
 
 const instance = axios.create({
-  baseURL: `${process.env.REACT_APP_HTTP_BACKEND_URL}/auth/`,
+  baseURL: `${import.meta.env.VITE_HTTP_BACKEND_URL}/auth/`,
 });
 
 const getInstance = () => {
-  if (!process.env.REACT_APP_HTTP_BACKEND_URL)
-    handleError(new Error("no environment variable : REACT_APP_BACKEND_URL"));
+  if (!import.meta.env.VITE_HTTP_BACKEND_URL)
+    handleError(new Error("no environment variable : VITE_HTTP_BACKEND_URL"));
 
   return instance;
 };
