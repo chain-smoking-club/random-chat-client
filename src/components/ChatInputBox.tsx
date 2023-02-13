@@ -1,10 +1,10 @@
+import { useSocket } from "../context/socket";
 import useInput from "../hooks/useInput";
-import useRoom from "../hooks/useRoom";
 import { emitSendMessage } from "../service/socketApis/clientToServer";
 
 const ChatInputBox = () => {
   const { input: typingMessage, onChange, onSubmitCallback } = useInput("");
-  const { joinedRoomName } = useRoom();
+  const { joinedRoomName } = useSocket();
 
   const onSubmit = onSubmitCallback(async () => {
     if (!joinedRoomName) throw new Error("no joinedRoomName : at chatinputbox");

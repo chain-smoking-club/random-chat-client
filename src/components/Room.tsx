@@ -1,9 +1,10 @@
+import { useSocket } from "../context/socket";
 import useRoom from "../hooks/useRoom";
 import ChatInputBox from "./ChatInputBox";
 import ChatMessages from "./ChatMessages";
 
 const Room = () => {
-  const { joinedRoomName, leaveRoom } = useRoom();
+  const { joinedRoomName, leaveRoom } = useSocket();
   return (
     <>
       <h2>방제: {joinedRoomName}</h2>

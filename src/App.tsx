@@ -4,39 +4,42 @@ import LobbyPage from "./pages/lobby";
 import RootPage from "./pages/root";
 import LoginPage from "./pages/login";
 import { AuthProvider, useAuth } from "./context/auth";
+import { SocketProvider } from "./context/socket";
 
 export default function App() {
   return (
     <>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<RootPage />} />
-          <Route
-            path="/lobby"
-            element={
-              <RequireAuth>
-                <LobbyPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/room/:roomId"
-            element={
-              <RequireAuth>
-                <RoomPage />
-              </RequireAuth>
-            }
-          />
-          <Route
-            path="/login"
-            element={
-              <NoNeedAuth>
-                <LoginPage />
-              </NoNeedAuth>
-            }
-          />
-        </Routes>
-      </AuthProvider>
+      <SocketProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<RootPage />} />
+            <Route
+              path="/lobby"
+              element={
+                <RequireAuth>
+                  <LobbyPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/room/:roomId"
+              element={
+                <RequireAuth>
+                  <RoomPage />
+                </RequireAuth>
+              }
+            />
+            <Route
+              path="/login"
+              element={
+                <NoNeedAuth>
+                  <LoginPage />
+                </NoNeedAuth>
+              }
+            />
+          </Routes>
+        </AuthProvider>
+      </SocketProvider>
     </>
   );
 }

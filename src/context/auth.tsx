@@ -9,11 +9,13 @@ import { handleError } from "../error";
 import { fetchLogin, fetchSignup } from "../service/httpApis/auth";
 import { storage } from "../storage";
 import { AuthContextProps } from "../types/auth";
+import { useSocket } from "./socket";
 
 const AuthContext = createContext<AuthContextProps>(null!);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [hasAuth, setHasAuth] = useState(false);
+  const { connectSocket } = useSocket();
 
   const signup: AuthContextProps["signup"] = async (props) => {
     try {
@@ -26,10 +28,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const login: AuthContextProps["login"] = async (props) => {
     try {
       const res = await fetchLogin(props);
-      storage.set("ACCESS_TOKEN", res.data.access_token);
-      // TODO: 서버 로그인 api 구현시 수정
-      // storage.set("ACCESS_TOKEN", "temp");
+      storage.set("ACCESS_TOKEN", res.data.data.access_token);
       setHasAuth(true);
+      connectSocket();
     } catch (err) {
       handleError(err);
     }

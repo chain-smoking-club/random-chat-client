@@ -4,7 +4,6 @@ export type Room = {
 
 export type Message = {
   content: string;
-  roomName: string;
 };
 
 export type GetRoomsResponse = {

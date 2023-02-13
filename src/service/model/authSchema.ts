@@ -4,6 +4,12 @@ export type SignRequestProps = {
   password: string;
 };
 
+export type SignUpRequestProps = {
+  email: string;
+  password: string;
+  nickname: string;
+};
+
 export type SignResponseProps = {
   access_token: string;
 };

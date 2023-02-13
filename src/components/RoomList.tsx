@@ -1,11 +1,12 @@
 import { useQuery } from "react-query";
+import styled from "styled-components";
+import { useSocket } from "../context/socket";
 import useInput from "../hooks/useInput";
-import useRoom from "../hooks/useRoom";
 import { fetchGetRooms } from "../service/httpApis/room";
 
 const RoomList = () => {
   const { input, onChange, onSubmitCallback } = useInput("");
-  const { makeRoom, joinRoom } = useRoom();
+  const { makeRoom, joinRoom } = useSocket();
   const { data: roomNames } = useQuery(["getRooms"], fetchGetRooms, {
     select: (data) => data.data.data,
   });
@@ -22,14 +23,14 @@ const RoomList = () => {
           <div>no room</div>
         ) : (
           roomNames.map((roomName, index) => (
-            <div
+            <StyledRoom
               key={index}
               onClick={() => {
                 joinRoom({ roomName });
               }}
             >
               {roomName}
-            </div>
+            </StyledRoom>
           ))
         )}
       </>
@@ -42,3 +43,9 @@ const RoomList = () => {
 };
 
 export default RoomList;
+
+const StyledRoom = styled.div`
+  &:hover {
+    cursor: pointer;
+  }
+`;
